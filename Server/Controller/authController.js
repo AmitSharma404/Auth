@@ -1,8 +1,10 @@
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModel from "../Models/userModels.js";
+import { transport } from "../config/nodemailer.js";
 
 export const register = async (req, res) => {
+
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
@@ -32,16 +34,24 @@ export const register = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    console.log(token);
 
-    return res.cookie("token", token, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-    .status(201)
-    .json({
+    .status(201);
+    // sending welcome email
+    const mailOptions = {
+      from: process.env.SENDER_EMAIL,
+      to: email,
+      subject: `Welcome to my Authentication demo. Your account has been created with email id: ${email}`
+    }
+
+    await transport.sendMail(mailOptions);
+
+    return res.json({
       success:true,
       message:"User registered Successfully",
       user:{
