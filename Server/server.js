@@ -12,6 +12,8 @@ app.use(cors({credentials:true}));
 app.use(express.json())
 // api endpoints
 
+// my apis
+
 app.get('/login',(req,res) => res.send("Api is working"));
 app.use('/api/auth',authRouter);
 
