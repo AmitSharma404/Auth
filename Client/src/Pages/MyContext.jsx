@@ -1,19 +1,11 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
 const Mycontext = createContext();
 
 const MyContextProvider = ({children}) => {
 
-    const [count,setCount] = useState(0);
-    
-    const value = {
-        count,
-        increment: () => setCount(prev => prev + 1),
-        decrement: () => setCount(prev => prev + 1)
-    }
-
   return (
-    <Mycontext.Provider value={value}>
+    <Mycontext.Provider value={""}>
       {children}
     </Mycontext.Provider>
   );
