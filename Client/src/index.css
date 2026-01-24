@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+
+@theme inline {
+    --animate-toast: newtoast 2s linear forwards;
+}
+
+@keyframes newtoast {
+    0% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

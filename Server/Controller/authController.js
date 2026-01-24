@@ -1,7 +1,9 @@
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModel from "../Models/userModels.js";
-import { transport } from "../config/nodemailer.js";
+// import { transport } from "../config/nodemailer.js";
+import { generatecode } from "../utils/urlshortnercode.js";
+import Url  from "../Models/urlModel.js";
 
 export const register = async (req, res) => {
 
@@ -43,23 +45,23 @@ export const register = async (req, res) => {
     })
     .status(201);
     // sending welcome email
-    const mailOptions = {
-      from: process.env.SENDER_EMAIL,
-      to: email,
-      subject: `Welcome to my Authentication demo. Your account has been created with email id: ${email}`
-    }
+    // const mailOptions = {
+    //   from: process.env.SENDER_EMAIL,
+    //   to: email,
+    //   subject: `Welcome to my Authentication demo. Your account has been created with email id: ${email}`
+    // }
 
-    await transport.sendMail(mailOptions);
+    // await transport.sendMail(mailOptions);
 
-    return res.json({
-      success:true,
-      message:"User registered Successfully",
-      user:{
-        id:user._id,
-        name:user.name,
-        email:user.email,
-      }
-    });
+    // return res.json({
+    //   success:true,
+    //   message:"User registered Successfully",
+    //   user:{
+    //     id:user._id,
+    //     name:user.name,
+    //     email:user.email,
+    //   }
+    // });
   } catch (error) {
     res.json({
       success: false,
@@ -137,3 +139,53 @@ export const userLogout = async (req, res) => {
     });
   }
 };
+
+
+export const createuserUrl = async(req,res) => {
+    try {
+      const { longUrl } = req.body;
+      const existingUrl = await Url.findOne({longUrl});
+      // console.log(existingUrl);
+    if(existingUrl){
+      return res.json({
+        success:false,
+        message:"you have already shortened your url",
+        shortUrl: existingUrl.shortUrl,
+        shortCode: existingUrl.shortCode
+      })
+    }
+
+    const shortCode = generatecode();
+    const shortUrl = `http://localhost:5173/${shortCode}`;
+
+    const url = new Url({
+      longUrl,
+      shortUrl,
+      shortCode,
+    })
+
+    await url.save();
+
+    return res.status(201).json({
+      success:true,
+      id:url._id,
+      message:"Your short url is created",
+      shortCode,
+      shortUrl
+    })
+
+    } catch (error) {
+      return res.status(500).json({message:error.message})
+    }
+}
+
+
+
+
+export const redirectUrl = async(req,res) => {
+    const {shortCode} = req.params;
+    const url = await Url.findOne({shortCode});
+    res.json({
+      longUrl:url.longUrl,
+    })
+}
