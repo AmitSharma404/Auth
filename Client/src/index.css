@@ -14,3 +14,11 @@
         opacity: 1;
     }
 }
+
+@utility neumorphism {
+    @apply shadow-[5px_5px_10px_hsla(0,50%,10%,0.2)_inset,-5px_-5px_10px_hsla(100,100%,100%,0.8)_inset];
+}
+
+@utility squircle {
+    corner-shape:squircle;
+}

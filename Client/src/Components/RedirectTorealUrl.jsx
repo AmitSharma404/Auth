@@ -16,7 +16,7 @@ export const RedirectTorealUrl = () => {
     })
     return (
         <div className="flex min-h-100 w-full items-center justify-center">
-            <h1 className="bg-teal-300 text-3xl text-neutral-950 px-6 py-2 rounded-sm font-bold">Redirecting...</h1>
+            <h1 className="bg-teal-300 text-3xl text-white px-6 py-2 rounded-full font-bold">Redirecting...</h1>
         </div>
     )
 };
