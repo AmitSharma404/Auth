@@ -44,24 +44,9 @@ export const register = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
     .status(201);
-    // sending welcome email
-    // const mailOptions = {
-    //   from: process.env.SENDER_EMAIL,
-    //   to: email,
-    //   subject: `Welcome to my Authentication demo. Your account has been created with email id: ${email}`
-    // }
 
-    // await transport.sendMail(mailOptions);
-
-    // return res.json({
-    //   success:true,
-    //   message:"User registered Successfully",
-    //   user:{
-    //     id:user._id,
-    //     name:user.name,
-    //     email:user.email,
-    //   }
-    // });
+    const transport = nodema
+    
   } catch (error) {
     res.json({
       success: false,
@@ -184,7 +169,9 @@ export const createuserUrl = async(req,res) => {
 
 export const redirectUrl = async(req,res) => {
     const {shortCode} = req.params;
+    // console.log(shortCode)
     const url = await Url.findOne({shortCode});
+    console.log(url);
     res.json({
       longUrl:url.longUrl,
     })

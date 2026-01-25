@@ -4,12 +4,16 @@ import cors from 'cors';
 import express from 'express';
 import connectDB from './config/mongodb.js';
 import { authRouter } from './Routes/authRoutes.js';
+import {authenticate} from './Middlewares/authenticate.js'
 connectDB();
 const PORT = process.env.PORT;
 const app = express();
 app.use(cookieParser());
 app.use(cors({credentials:true}));
 app.use(express.json())
+
+// middlewares
+app.use(authenticate)
 // api endpoints
 
 // my apis
