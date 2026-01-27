@@ -1,17 +1,18 @@
 @import 'tailwindcss';
 
 @theme inline {
-    --animate-toast: newtoast 2s linear forwards;
+    --animate-rotate: rotate 4s linear infinite;
 }
 
-@keyframes newtoast {
+@keyframes rotate {
     0% {
-        transform: translateY(100%);
-        opacity: 0;
+        transform:rotate3d(1,0,1,0deg);
+        filter: hue-rotate(0deg);
+        
     }
     100% {
-        transform: translateY(0);
-        opacity: 1;
+        transform: rotate3d(0,0,1,360deg);
+        filter: hue-rotate(360deg);
     }
 }
 
