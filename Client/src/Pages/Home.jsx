@@ -9,7 +9,7 @@ export const Home = () => {
     const [color1,setColor] = useState('');
     const [color2,setColor2] = useState('');
     const generateStar = () => {
-      const numberofStar = Math.floor(window.innerHeight * window.innerWidth)/10000;
+      const numberofStar = Math.floor(window.innerHeight * window.innerWidth)/100000;
       const newStar = [];
       for(let i = 0;i < numberofStar;i++) {
         newStar.push({
