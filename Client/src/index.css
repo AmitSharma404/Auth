@@ -6,13 +6,12 @@
 
 @keyframes rotate {
     0% {
-        transform:rotate3d(1,0,1,0deg);
-        filter: hue-rotate(0deg);
-        
+        scale: 0%;
+        opacity: 1;
     }
     100% {
-        transform: rotate3d(0,0,1,360deg);
-        filter: hue-rotate(360deg);
+        scale: 500%;
+        opacity: 0;
     }
 }
 

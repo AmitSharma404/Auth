@@ -6,10 +6,8 @@ export const Home = () => {
     const [text,setText] = useState("");
     const fullText = "Url Shortner";
     const [stars,setStar] = useState([]);
-    const [color1,setColor] = useState('');
-    const [color2,setColor2] = useState('');
     const generateStar = () => {
-      const numberofStar = Math.floor(window.innerHeight * window.innerWidth)/100000;
+      const numberofStar = Math.floor(window.innerHeight * window.innerWidth)/10000;
       const newStar = [];
       for(let i = 0;i < numberofStar;i++) {
         newStar.push({
@@ -18,31 +16,26 @@ export const Home = () => {
           rotate:Math.random() * 360,
           x:Math.random() * 100,
           y:Math.random() * 100,
+          animationdelay:Math.random() * 4 + 1,
+          color:generateColor()
         })
       }
       setStar(newStar);
     }
-    const generateColor = () => {
-      let code1 = '#';
-      let code = '#'
-      let index = 0
-      let index1 = 2
-      let letter = '1ab2c3def1234567890';
 
-      for(let i = 0;i < 6;i++){
-        index1 = Math.floor(Math.random() * letter.length);
-        index = Math.floor(Math.random() * letter.length);
-        code += letter[index1];
-        code1 += letter[index];
+    const generateColor = () => {
+      let code = '123456789abcdef';
+      let color = '#'
+      for(let i = 0;i< 6;i++){
+        let index = Math.floor(Math.random() * code.length);
+        color += code[index];
       }
-      setColor(code);
-      setColor2(code1)
+      return color;
     }
     
 
     useEffect(() => {
-      generateStar()
-      generateColor()
+      generateStar();
     },[])
 
     useEffect(() => {
@@ -59,23 +52,23 @@ export const Home = () => {
     },[])
 
     return (
-        <div className="flex justify-center items-center flex-col space-y-6 bg-linear-to-lt from-green-500 to-lime-400 bg-stone-200 relative">
+        <div className="flex justify-center items-center flex-col space-y-6  bg-stone-200 relative">
           <div className="min-h-screen pointer-events-none absolute w-full">
             {stars.map(star => (
-              <div key={star.id} className="absolute z-0 rounded-full animate-rotate" 
+              <div key={star.id} className="absolute z-0 rounded-full animate-rotate bg-black/50" 
               style={{
-                background:`radial-gradient(circle at top,${color1 + '10'},${color2 },${color1 + '10'},${color2})`,
+                background:star.color,
                 rotate:star.rotate + "deg",
                 width:star.size + 'px',
                 height:star.size + 'px',
                 top:star.x + '100%',
-                left:star.y + '100%'
+                left:star.y + '100%',
+                animationDelay:star.animationdelay + 's'
               }}>
-
               </div>
             ) )}
           </div>
-          <div className="flex items-center flex-col gap-4 border border-dashed border-neutral-600/60 min-h-screen px-20 justify-center">
+          <div className="flex items-center flex-col gap-4  min-h-screen px-20 justify-center">
             <motion.div 
             initial={{opacity:0,x:-100,}}
             whileHover={{scale:1.05,y:-30,boxShadow:"10px red"}}

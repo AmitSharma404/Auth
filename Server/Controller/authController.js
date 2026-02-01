@@ -165,13 +165,11 @@ export const createuserUrl = async(req,res) => {
 }
 
 
-
-
 export const redirectUrl = async(req,res) => {
     const {shortCode} = req.params;
     // console.log(shortCode)
     const url = await Url.findOne({shortCode});
-    console.log(url);
+    // console.log(url);
     res.json({
       longUrl:url.longUrl,
     })
