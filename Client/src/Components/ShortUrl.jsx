@@ -27,7 +27,7 @@ const ShortUrl = () => {
     }
 
   return (
-    <div className='flex flex-col space-y-12 items-center justify-center'>
+    <div className='flex flex-col space-y-12 items-center justify-center z-10'>
         <div>
             <input type="text" className='h-16 sm:w-120 md:w-220 text-xl rounded-[90px] squircle outline-none px-4 py-1 font-semibold shadow-[6px_6px_10px_hsla(0,50%,10%,0.1),-6px_-6px_10px_hsla(100,100%,100%,0.8)] focus:neumorphism' placeholder='Enter your link to short' 
             onChange={handleChange} value={input} required />

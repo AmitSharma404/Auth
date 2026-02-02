@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import ShortUrl from "../Components/ShortUrl"
 import {motion} from 'motion/react';
+import { Canvas } from "../Components/Canvas";
 export const Home = () => {
 
     const [text,setText] = useState("");
@@ -35,7 +36,7 @@ export const Home = () => {
     
 
     useEffect(() => {
-      generateStar();
+      // generateStar();
     },[])
 
     useEffect(() => {
@@ -68,7 +69,7 @@ export const Home = () => {
               </div>
             ) )}
           </div>
-          <div className="flex items-center flex-col gap-4  min-h-screen px-20 justify-center">
+          <div className="flex items-center flex-col gap-4  min-h-screen px-20 justify-center z-10">
             <motion.div 
             initial={{opacity:0,x:-100,}}
             whileHover={{scale:1.05,y:-30,boxShadow:"10px red"}}
@@ -81,6 +82,7 @@ export const Home = () => {
           </motion.div>
             <div>
               <ShortUrl/>
+              <Canvas/>
             </div>
           </div>
          </div> 
