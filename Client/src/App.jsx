@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { RedirectTorealUrl } from "./Components/redirectTorealUrl.jsx"
+import React from "react";
+const { RedirectTorealUrl } = React.lazy(() => import("./Components/redirectTorealUrl.jsx"));
 import { Home } from "./Pages/Home.jsx"
 
 function App() {

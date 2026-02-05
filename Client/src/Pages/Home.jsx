@@ -73,7 +73,7 @@ export const Home = () => {
             <motion.div 
             initial={{opacity:0,x:-100,}}
             whileHover={{scale:1.05,y:-30,boxShadow:"10px red"}}
-            whileTap={{scale:1.10,y:-10}}
+            whileTap={{scale:1.07,y:-10}}
             animate={{opacity:1,x:0}}
             transition={{duration:0.3,ease:"linear",type:'spring'}}
             className="neumorphism px-4 py-1 rounded-[40px] squircle">
