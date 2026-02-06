@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import ShortUrl from "../Components/ShortUrl"
 import {motion} from 'motion/react';
 import { Canvas } from "../Components/Canvas";
+import { Lights } from "../Components/Lights";
 export const Home = () => {
 
     const [text,setText] = useState("");
@@ -83,6 +84,7 @@ export const Home = () => {
             <div>
               <ShortUrl/>
               <Canvas/>
+              <Lights/>
             </div>
           </div>
          </div> 
