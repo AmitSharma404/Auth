@@ -1,16 +1,15 @@
-import bycrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import userModel from "../Models/userModels.js";
-// import { transport } from "../config/nodemailer.js";
 import { generatecode } from "../utils/urlshortnercode.js";
-import Url  from "../Models/urlModel.js";
+import Url from "../Models/urlModel.js";
 
 export const register = async (req, res) => {
 
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: "Missing Fields",
     });
@@ -24,7 +23,7 @@ export const register = async (req, res) => {
         message: "User already exists",
       });
     }
-    const hashpassword = await bycrypt.hash(password, 10);
+    const hashpassword = await bcrypt.hash(password, 10);
 
     const user = new userModel({
       name,
@@ -37,16 +36,17 @@ export const register = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res.cookie("token", token, {
+    return res.cookie("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-    .status(201);
-
-    const transport = nodema
-    
+    .status(201)
+    .json({
+      success: true,
+      message: "Registration Successful",
+    });
   } catch (error) {
     res.json({
       success: false,
@@ -74,7 +74,7 @@ export const userLogin = async (req, res) => {
         });
       }
 
-      const isMatch = await bycrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
         return res.json({
@@ -90,8 +90,8 @@ export const userLogin = async (req, res) => {
 
       return res.cookie("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV == "production",
-        sameSite: process.env.NODE_ENV == "production" ? "none" : "strict",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       })
       .json({
@@ -110,8 +110,8 @@ export const userLogout = async (req, res) => {
   try {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV == "production",
-      sameSite: process.env.NODE_ENV == "production" ? "none" : "strict",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     })
     .json({
       success: true,
@@ -166,11 +166,25 @@ export const createuserUrl = async(req,res) => {
 
 
 export const redirectUrl = async(req,res) => {
+  try {
     const {shortCode} = req.params;
-    // console.log(shortCode)
     const url = await Url.findOne({shortCode});
-    // console.log(url);
-    res.json({
-      longUrl:url.longUrl,
-    })
+
+    if (!url) {
+      return res.status(404).json({
+        success: false,
+        message: "URL not found",
+      });
+    }
+
+    return res.json({
+      success: true,
+      longUrl: url.longUrl,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
 }

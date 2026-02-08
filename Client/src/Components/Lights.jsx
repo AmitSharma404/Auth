@@ -212,7 +212,7 @@ export const Lights = () => {
     cellRefs.current.forEach((c) => {
       if (c) {
         c.style.opacity = "0.6";
-        c.style.backgroundColor = "#222";
+        c.style.backgroundColor = "#111";
       }
     });
 
@@ -286,7 +286,7 @@ export const Lights = () => {
             ref={(el) => (cellRefs.current[i] = el)}
             className="rounded-sm"
             style={{
-              backgroundColor: "#111",
+              backgroundColor: "#000",
               opacity: 0.3,
               transition: "all 0.15s ease",
               willChange: "background-color, box-shadow, transform, opacity",
