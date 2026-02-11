@@ -75,7 +75,7 @@ export const Canvas = () => {
 
     window.addEventListener('resize', handleResize);
 
-    // Cleanup on unmount
+    
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener('resize', handleResize);

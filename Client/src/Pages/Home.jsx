@@ -84,7 +84,6 @@ export const Home = () => {
             <div>
               <ShortUrl/>
               <Canvas/>
-              <Lights/>
             </div>
           </div>
          </div> 
