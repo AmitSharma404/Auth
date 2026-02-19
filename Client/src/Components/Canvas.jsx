@@ -17,9 +17,9 @@ export const Canvas = () => {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
         this.size = Math.random() * 2+1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
-        this.color = Math.random() < 0.5 ? 'crimson' : 'blue';
+        this.speedX = Math.random() * 0.75 - 0.25;
+        this.speedY = Math.random() * 0.75 - 0.25;
+        this.color = Math.random() < 0.5 ? 'red' : 'blue';
       }
 
       update() {
