@@ -3,7 +3,7 @@ import React from "react";
 const { RedirectTorealUrl } = React.lazy(() => import("./Components/redirectTorealUrl.jsx"));
 import { Home } from "./Pages/Home.jsx"
 import { Login } from "./Auth/Login.jsx";
-import {NotFound} from "./Pages/NotFound.jsx";
+import { NotFound } from "./Auth/NotFound.jsx"; 
 function App() {
 
   return (
