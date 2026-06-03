@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const api = axios.create({
+export const api = axios.create({
     method:"GET POST",
     baseURL:"http://localhost:3000/api/auth/",
     timeout:500000,
@@ -9,4 +9,3 @@ const api = axios.create({
     }
 })
 
-export default api;

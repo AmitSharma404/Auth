@@ -19,7 +19,7 @@ export const Canvas = () => {
         this.size = Math.random() * 2+1;
         this.speedX = Math.random() * 0.75 - 0.25;
         this.speedY = Math.random() * 0.75 - 0.25;
-        this.color = Math.random() < 0.5 ? 'red' : 'blue';
+        this.opacity = Math.random() * 0.5 + 0.2;
       }
 
       update() {
@@ -34,7 +34,7 @@ export const Canvas = () => {
       }
 
       draw() {
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = `hsl(192,100%,50%,${this.opacity})`
         ctx.shadowBlur = 5;
         ctx.shadowColor = this.color;
         ctx.beginPath();

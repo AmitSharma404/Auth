@@ -1,6 +1,6 @@
 
 import { useParams } from "react-router-dom";
-import api from "../utils/axiosInstance";
+import {api} from "../utils/axiosInstance";
 import { useEffect } from "react";
 
 export const RedirectTorealUrl = () => {
