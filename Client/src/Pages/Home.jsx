@@ -29,7 +29,7 @@ export const Home = () => {
           <div className="flex items-center flex-col gap-4  min-h-screen px-20 justify-center z-10">
            
             <h1
-            className="font-extrabold text-4xl sm:text-6xl text-transparent bg-clip-text bg-linear-to-r/decreasing from-indigo-500 to-green-500">Url Shortner</h1>
+            className="Alfa text-4xl sm:text-6xl text-transparent bg-clip-text bg-linear-to-r/decreasing from-indigo-500 to-green-500 ">Url Shortner</h1>
             <div className="py-4">
               <ShortUrl/>
               <Canvas/>

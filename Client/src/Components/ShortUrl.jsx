@@ -1,45 +1,58 @@
 import { useState } from "react";
 import { api } from "../utils/axiosInstance";
 import { toast } from "sonner";
-
+import { motion } from "motion/react";
 export const ShortUrl = () => {
   const [input, setInput] = useState("");
   const [link, setLink] = useState("");
   const handleChange = (e) => {
-      setInput(e.target.value);
+    setInput(e.target.value);
   };
 
   const sendUrl = async () => {
-    const IsValid = URL.canParse(input);
-    if (IsValid) {
-      const response = await api.post("/", {
-        longUrl: input,
-      });
-      setInput('');
-      if (response.data.success) {
-      toast.success("Short URL is created")
-      setLink(response.data.shortUrl);
+    try {
+      const IsValid = URL.canParse(input);
+      if (IsValid) {
+        const response = await api.post("/", {
+          longUrl: input,
+        });
+        setInput("");
+        if (response.data.success) {
+          toast.success("Short URL is created");
+          setLink(response.data.shortUrl);
+        } else {
+          toast.warning(response.data.message);
+          setLink(response.data.shortUrl);
+        }
       } else {
-        toast.warning(response.data.message)
-        setLink(response.data.shortUrl)
+        toast.error("Please enter a Valid URL");
       }
-    } else {
-      toast.error("Please enter a Valid URL")
+    } catch (error) {
+      toast.error(error.message);
+      throw new Error("Network error", error.message);
     }
   };
   const copyLink = async () => {
     await navigator.clipboard.writeText(link);
     await navigator.clipboard.readText();
-    toast.success("Link Copied")
+    toast.success("Link Copied");
   };
 
   return (
-    <div className="flex flex-col space-y-12 items-center justify-center z-10">
-      <div className="flex relative">
-        <SearchIcon className="size-6 top-1/2 left-6 -translate-y-1/2 absolute" />
-        <input
+    <div className="flex flex-col space-y-12 items-center justify-center ">
+      <div className="flex relative p-10 border-stone-300 border w-full line-bg">
+        <SearchIcon className="size-6 top-1/2 left-15 -translate-y-1/2 absolute" />
+        <motion.input
+          style={{
+            zIndex: 10,
+        }}
+          transition={{
+            duration: 0.3,
+            stiffness: 150,
+            damping:20
+          }}
           type="text"
-          className="h-16 sm:w-120 md:w-220 text-xl rounded-full  outline-none px-14 py-1 font-semibold shadow-[6px_6px_10px_hsla(0,50%,10%,0.1),-6px_-6px_10px_hsla(100,100%,100%,0.8)] focus:neumorphism"
+          className=" border-2 border-white/20 h-16 sm:w-120 md:w-220 text-xl rounded-full  outline-none px-14 py-1 font-semibold focus:neumorphism bg-amber-50"
           placeholder="Enter your link to short"
           onChange={handleChange}
           value={input}
@@ -49,21 +62,26 @@ export const ShortUrl = () => {
       <div>
         <button
           onClick={sendUrl}
-          className="px-6 py-2 tracking-wider text-2xl font-bold bg-linear-to-l from-neutral-600 to-neutral-800 rounded-full text-white cursor-pointer border-s-stone-300 border"
+          className=" px-6 py-2 tracking-wider text-md font-medium  rounded-full cursor-pointer text-white bg-[radial-gradient(circle_at_top_right,var(--color-sky-500)_1%,var(--color-sky-300)_100%)] shadow-md
+"
         >
           Short
         </button>
       </div>
-      {link &&
+      {link && (
         <div className="border border-neutral-500 px-4 py-3 rounded-md">
           <p className="text-xs text-black/50 font-medium">Here is your URL</p>
-          <button className="underline font-semibold relative" onClick={copyLink}>
-            <span className="bg-linear-to-l from-sky-500 to-sky-300 absolute rotate-25 rounded-full text-white -top-3 -right-6 text-xs font-medium px-2 py-0.5">
+          <button
+            className="underline font-semibold relative"
+            onClick={copyLink}
+          >
+            <span className="bg-linear-to-l from-sky-600 to-sky-800 absolute rotate-15 rounded-full text-white -top-3 -right-6 text-lg font-medium px-2 py-0.5">
               copy
             </span>
             <a href={link}>{link}</a>
           </button>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };
